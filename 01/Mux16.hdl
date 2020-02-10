@@ -15,4 +15,35 @@ CHIP Mux16 {
 
     PARTS:
     // Put your code here:
+
+
+a[0...15]=q
+a[0...15]=q
+
+// do i make a "bus" for of variable for a and b??
+
+
+Not(in=q,out=notq);
+Not(in=b[0],out=notb[0]);
+Not(in=sel,out=notsel);
+
+And(a=a[0],b=notb[0],out=n1[0]);
+And(a=a[0],b=b[0],out=n2[0]);
+And(a=nota[0],b=b[0],out=n3[0]);
+And(a=a[0],b=b[0],out=n4[0]);
+
+And(a=n1[0],b=notsel, out=w1[0]);
+And(a=n2[0],b=notsel,out=w2[0]);
+And(a=n3[0],b=sel,out=w3[0]);
+And(a=n4[0],b=sel,out=w4[0]);
+
+Or(a=w1[0],b=w2[0],out=p1[0]);
+Or(a=w3[0],b=w4[0],out=p2[0]);
+Or(a=p1[0],b=p2[0],out=out[0]);
+
+
+
+
+
+    
 }
