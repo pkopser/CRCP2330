@@ -15,12 +15,7 @@ CHIP HalfAdder {
     PARTS:
     // Put you code here:
 
-
-NOT(IN=a, OUT=nota);
-NOT(IN=b, OUT=notb);
-
-XOR(IN=nota, IN=b, out=s);
-XOR(IN=a,IN=notb, out=s);
-
-AND(a=a,b=b,out=c);
+    Xor(a=a,b=b,out=sum);
+    
+    And(a=a,b=b,out=carry);
 }
