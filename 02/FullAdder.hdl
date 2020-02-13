@@ -15,10 +15,20 @@ CHIP FullAdder {
     PARTS:
     // Put you code here:
 
-    Xor(a=a,b=b,out=n1);
-    
-    And(a=a,b=b,out=carry);
+  
 
- And(a=n1,b=c,out=sum);
+
+
+	HalfAdder(a=a,b=b,sum=s1,carry=c1);
+
+	HalfAdder(a=c,b=s1,sum=sum,carry=c2);
+
+	Or(a=c1,b=c2,out=carry);
+
+
+
+
+
+   
 
 }

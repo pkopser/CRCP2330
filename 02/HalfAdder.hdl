@@ -16,6 +16,5 @@ CHIP HalfAdder {
     // Put you code here:
 
     Xor(a=a,b=b,out=sum);
-    
     And(a=a,b=b,out=carry);
 }
