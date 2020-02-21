@@ -44,10 +44,11 @@ CHIP ALU {
     PARTS:
    // Put you code here:
 
+
 Not16(in=n1,out=nn1);
 Not16(in=n2,out=nn2);
 Not16(in=p1,out=p2);
-//Not16(in=out,out=zr);
+
 
 Mux16(a=x,b=false,sel=zx,out=n1);
 
@@ -63,11 +64,20 @@ And16(a=w1,b=w2,out=anded);
 
 Mux16(a=anded,b=added,sel=f,out=p1);
 
-Mux16(a=p1,b=p2,sel=no,out=out);
+Mux16(a=p1,b=p2,sel=no,out=out,out[15]=lastNumber,out[0..7]=firstHalf,out[8..15]=secondHalf);
 
-And16(a=p1,b=p2,out=nr);
+And(a=true,b=lastNumber,out=ng);
 
-And16(a=p1,b=p2,out=ng);
+
+
+Or8Way(in=firstHalf,out=fH);
+
+Or8Way(in=secondHalf,out=sH);
+
+Or(a=fH,b=sH,out=key);
+
+Not(in=key,out=zr);
+
 
 
 
