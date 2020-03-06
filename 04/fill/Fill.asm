@@ -14,12 +14,12 @@
 // Put your code here.
 
 
-
+(KEYBOARD)
 @KBD
-D=A
+D=M
 
 @BLACK
-0;JGT
+D;JGT
 
 
 //white loop
@@ -30,7 +30,7 @@ D=A
 @addr
 M=D
 
-@256
+@R256
 D=M
 
 @n
@@ -45,23 +45,24 @@ D=M
 @n
 D=D-M
 @0
-D;JGT /start over when done filling screen
+D;JGT //start over when done filling screen
 
 @addr
 A=M
 M=0 //set pixels to white
 
 @i
-M=M+1
-@32
+M=M+1 //might be 32
+@R32
 D=A
 @addr
 M=D+M
-@LOOP
+@KEYBOARD
 0;JMP
 
 //black loop
 
+(BLACK)
 @SCREEN
 D=A
 
@@ -83,19 +84,19 @@ D=M
 @n
 D=D-M
 @0
-D;JGT /start over when done filling screen
+D;JGT //start over when done filling screen
 
 @addr
 A=M
 M=-1 //set pixels to black
 
 @i
-M=M+1
-@32
+M=M+1 // might be 32
+@R32
 D=A
 @addr
 M=D+M
-@LOOP
+@KEYBOARD
 0;JMP
 
 //ending line
