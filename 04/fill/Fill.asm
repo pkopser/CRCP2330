@@ -14,98 +14,92 @@
 // Put your code here.
 
 
-(KEYBOARD)
 @KBD
 D=M
 
 @BLACK
-D;JGT    //if a key is pressed, go to "black" section
+D;JGT
 
+
+//white loop
+
+@i
+M=0 // start counting at 0
+
+@i
+D=M
+@n
+D=D-M
+@0
+D;JGT //start over when done filling screen
 
 @SCREEN
 D=A
 
-@sum
+
+@addr
 M=D
 
-//@8191
-//D=A
 
+@8192
+D=A
 @n
 M=D
 
-@i
-M=0
 
-@i
-D=M // start counting at 0
-
-@n
-D=D-M
-
-
-@0
-D;JGT //start over when done filling screen
-
-
+@addr
+A=M
+M=0 //set pixels to white
 
 @i
 M=M+1 
 @32
 D=A
-@sum
-M=D+M       //sum=sum+32
-
-
-@sum
-A=M
-M=0 //set pixels to white
-
+@addr
+M=D+M
 @KEYBOARD
 0;JMP
-
-//black loop
 
 (BLACK)
+
+@i
+M=0 // start counting at 0
+
+@i
+D=M
+@n
+D=D-M
+@0
+D;JGT //start over when done filling screen
+
 @SCREEN
 D=A
 
-@sum
+
+@addr
 M=D
 
-@8191
+
+@8192
 D=A
-
 @n
 M=D
 
-@i
-M=0
 
-@i
-D=M // start counting at 0
-
-@n
-D=D-M
-
-
-@0
-D;JGT //start over when done filling screen
+@addr
+A=M
+M=-1 //set pixels to black
 
 @i
 M=M+1 
 @32
 D=A
-@sum
-M=D+M       //sum=sum+32
-
-
-@sum
-A=M
-M=0 //set pixels to white
-
+@addr
+M=D+M
 @KEYBOARD
 0;JMP
+
+//ending line
 
 (END)
 @END
