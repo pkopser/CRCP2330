@@ -12,3 +12,9 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+
+
+
+
+
+// some part to add infinite loop @ the end
