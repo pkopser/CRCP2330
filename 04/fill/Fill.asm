@@ -22,40 +22,41 @@ D=M
 D;JGT
 
 
-//white loop
 
 @SCREEN
 D=A
 
-@addr
+@sum
 M=D
 
-@R256
-D=M
+@8193
+D=A
 
 @n
 M=D
 
 @i
-M=0 // start counting at 0
+M=0
 
-(LOOP)
 @i
-D=M
+D=M // start counting at 0
+
 @n
 D=D-M
+
+
 @0
 D;JGT //start over when done filling screen
 
-@addr
+@sum
 A=M
 M=0 //set pixels to white
 
 @i
-M=M+1 //might be 32
-@R32
+M=M+1 
+@32
 D=A
-@addr
+@sum
 M=D+M
 @KEYBOARD
 0;JMP
@@ -66,40 +67,41 @@ M=D+M
 @SCREEN
 D=A
 
-@addr
+@sum
 M=D
 
-@256
-D=M
+@8193
+D=A
 
 @n
 M=D
 
 @i
-M=0 // start counting at 0
+M=0
 
-(LOOP)
 @i
-D=M
+D=M // start counting at 0
+
 @n
 D=D-M
+
+
+
 @0
 D;JGT //start over when done filling screen
 
-@addr
+@sum
 A=M
 M=-1 //set pixels to black
 
 @i
-M=M+1 // might be 32
-@R32
+M=M+1 
+@32
 D=A
-@addr
+@sum
 M=D+M
 @KEYBOARD
 0;JMP
-
-//ending line
 
 (END)
 @END
