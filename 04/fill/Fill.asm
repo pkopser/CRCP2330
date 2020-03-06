@@ -19,8 +19,7 @@
 D=M
 
 @BLACK
-D;JGT
-
+D;JGT    //if a key is pressed, go to "black" section
 
 
 @SCREEN
@@ -29,8 +28,8 @@ D=A
 @sum
 M=D
 
-@8193
-D=A
+//@8191
+//D=A
 
 @n
 M=D
@@ -48,16 +47,20 @@ D=D-M
 @0
 D;JGT //start over when done filling screen
 
-@sum
-A=M
-M=0 //set pixels to white
+
 
 @i
 M=M+1 
 @32
 D=A
 @sum
-M=D+M
+M=D+M       //sum=sum+32
+
+
+@sum
+A=M
+M=0 //set pixels to white
+
 @KEYBOARD
 0;JMP
 
@@ -70,7 +73,7 @@ D=A
 @sum
 M=D
 
-@8193
+@8191
 D=A
 
 @n
@@ -86,26 +89,24 @@ D=M // start counting at 0
 D=D-M
 
 
-
 @0
 D;JGT //start over when done filling screen
-
-@sum
-A=M
-M=-1 //set pixels to black
 
 @i
 M=M+1 
 @32
 D=A
 @sum
-M=D+M
+M=D+M       //sum=sum+32
+
+
+@sum
+A=M
+M=0 //set pixels to white
+
 @KEYBOARD
 0;JMP
 
 (END)
 @END
 0;JMP
-
-
-
