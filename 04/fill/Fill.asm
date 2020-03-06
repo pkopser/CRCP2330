@@ -13,8 +13,89 @@
 
 // Put your code here.
 
+//keyboard loop
 
 
 
+@SCREEN
+D=A
 
-// some part to add infinite loop @ the end
+@addr
+M=D
+
+@256
+D=M
+
+@n
+M=D
+
+@i
+M=0 // start counting at 0
+
+(LOOP)
+@i
+D=M
+@n
+D=D-M
+@0
+D;JGT /start over when done filling screen
+
+@addr
+A=M
+M=0 //set pixels to white
+
+@i
+M=M+1
+@32
+D=A
+@addr
+M=D+M
+@LOOP
+0;JMP
+
+//black loop
+
+@SCREEN
+D=A
+
+@addr
+M=D
+
+@256
+D=M
+
+@n
+M=D
+
+@i
+M=0 // start counting at 0
+
+(LOOP)
+@i
+D=M
+@n
+D=D-M
+@0
+D;JGT /start over when done filling screen
+
+@addr
+A=M
+M=-1 //set pixels to black
+
+@i
+M=M+1
+@32
+D=A
+@addr
+M=D+M
+@LOOP
+0;JMP
+
+//ending line
+
+(END)
+@END
+0;JMP
+
+
+
