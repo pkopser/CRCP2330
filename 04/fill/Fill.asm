@@ -13,9 +13,16 @@
 
 // Put your code here.
 
-//keyboard loop
 
 
+@KBD
+D=A
+
+@BLACK
+0;JGT
+
+
+//white loop
 
 @SCREEN
 D=A
