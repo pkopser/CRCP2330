@@ -14,85 +14,38 @@
 // Put your code here.
 
 (KEYBOARD)
+
 @KBD
 D=M
 
+@WHITE
+D;JEQ
 @BLACK
 D;JGT
 
 
-//white loop
+(WHITE)  //---------------------------------------------------
 
-@i
-M=1 // start counting at 1
-
-@sum
-M=SCREEN
-
-@i
-D=M
-@8192
-D=D-A
-
-
-@32
-D=A
-@sum
-M=D+M //sum=sum+32
-
-
-@SUM
-A=M
-M=0 
-
-@i
-M=M+1 
-@KEYBOARD
-D;JGT 
-
-@END
-0;JMP
-
-
-
-(BLACK)
-
-@i
-M=1 // start counting at 1
-
-@sum
-M=SCREEN
-
-@i
-D=M
-
-@i
-M=M+1 //count by 1 for each new word
-
-@8192
-D=D-A
-
-
-@32
-D=A
-
-
-@sum
-M=D+M
-
-
-@SUM
-A=M
-M=-1 //set pixels to black
+@SCREEN
+M=0
 
 @KEYBOARD
-D;JGT //start over when done filling screen
+0;JMP
+
+
+(BLACK)  //---------------------------------------------------
+
+
+
+@SCREEN
+M=-1
+
+@KEYBOARD
+0;JMP
+
+
+(END)    //---------------------------------------------------
 
 @END
 0;JMP
 
-//ending line
-
-(END)
-@END
-0;JMP
