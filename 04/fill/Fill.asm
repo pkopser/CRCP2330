@@ -24,31 +24,33 @@ D;JGT
 //white loop
 
 @i
-M=1 // start counting at 0
+M=1 // start counting at 1
+
+@sum
+M=SCREEN
 
 @i
 D=M
 @8192
 D=D-A
-@END
-D;JGT //start over when done filling screen
+
 
 @32
-D=M
-
-
+D=A
 @sum
-M=D+M
+M=D+M //sum=sum+32
 
 
 @SUM
 A=M
-M=0 //set pixels to white
+M=0 
 
 @i
 M=M+1 
-
 @KEYBOARD
+D;JGT 
+
+@END
 0;JMP
 
 
@@ -56,17 +58,23 @@ M=M+1
 (BLACK)
 
 @i
-M=1 // start counting at 0
+M=1 // start counting at 1
+
+@sum
+M=SCREEN
 
 @i
 D=M
+
+@i
+M=M+1 //count by 1 for each new word
+
 @8192
 D=D-A
-@END
-D;JGT //start over when done filling screen
+
 
 @32
-D=M
+D=A
 
 
 @sum
@@ -77,10 +85,10 @@ M=D+M
 A=M
 M=-1 //set pixels to black
 
-@i
-M=M+1 
-
 @KEYBOARD
+D;JGT //start over when done filling screen
+
+@END
 0;JMP
 
 //ending line
