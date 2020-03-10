@@ -13,8 +13,8 @@
 
 // Put your code here.
 
-(KEYBOARD)
 
+(KEYBOARD) //-------------------
 @KBD
 D=M
 
@@ -24,28 +24,66 @@ D;JEQ
 D;JGT
 
 
-(WHITE)  //---------------------------------------------------
 
 @SCREEN
+D=A
+@word
+M=D
+
+@8192
+D=A
+@lastw
+M=D
+
+@i
+M=1
+
+(WHITE)
+
+@i
+D=M
+@lastw
+D=D-M
+@KEYBOARD
+D;JEQ
+
+@word
+D=M
+@i
+A=D+M
 M=0
 
-@KEYBOARD
+@i
+M=M+1
+
+@WHITE
 0;JMP
 
 
-(BLACK)  //---------------------------------------------------
 
 
 
-@SCREEN
+(BLACK)
+
+@i
+D=M
+@lastw
+D=D-M
+@KEYBOARD
+D;JEQ
+
+@word
+D=M
+@i
+A=D+M
 M=-1
 
-@KEYBOARD
+@i
+M=M+1
+
+@BLACK
 0;JMP
 
-
-(END)    //---------------------------------------------------
-
+(END) //----------------------
 @END
 0;JMP
-
