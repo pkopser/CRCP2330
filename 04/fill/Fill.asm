@@ -14,23 +14,29 @@
 // Put your code here.
 
 
+(KEYBOARD)
 @SCREEN
 M=-1
 D= A
-
-@16385
 
 (LOOP)
 D=D+1
 @16
 M=D
 
+@16700
+D=A-D
+@KEYBOARD
+D;JEQ
+
 @16
 A=M
 M=-1
+D=A
 
 @LOOP
 0;JMP
+
 
 
 (END) 
