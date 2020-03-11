@@ -14,76 +14,25 @@
 // Put your code here.
 
 
-(KEYBOARD) //-------------------
-@KBD
-D=M
-
-@WHITE
-D;JEQ
-@BLACK
-D;JGT
-
-
-
 @SCREEN
-D=A
-@word
+M=-1
+D= A
+
+@16385
+
+(LOOP)
+D=D+1
+@16
 M=D
 
-@8192
-D=A
-@lastw
-M=D
-
-@i
-M=1
-
-(WHITE)
-
-@i
-D=M
-@lastw
-D=D-M
-@KEYBOARD
-D;JEQ
-
-@word
-D=M
-@i
-A=D+M
-M=0
-
-@i
-M=M+1
-
-@WHITE
-0;JMP
-
-
-
-
-
-(BLACK)
-
-@i
-D=M
-@lastw
-D=D-M
-@KEYBOARD
-D;JEQ
-
-@word
-D=M
-@i
-A=D+M
+@16
+A=M
 M=-1
 
-@i
-M=M+1
-
-@BLACK
+@LOOP
 0;JMP
 
-(END) //----------------------
+
+(END) 
 @END
 0;JMP
