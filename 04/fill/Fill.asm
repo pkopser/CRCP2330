@@ -13,18 +13,50 @@
 
 // Put your code here.
 
-
 (KEYBOARD)
+@KBD
+D=M
+
+@WHITE
+D;JEQ
+@BLACK
+D;JGT
+
+
+(WHITE)
 @SCREEN
-M=-1
+M=0
 D= A
 
-(LOOP)
+(LOOPW)
 D=D+1
 @16
 M=D
 
-@16700
+@24575
+D=A-D
+@KEYBOARD
+D;JEQ
+
+@16
+A=M
+M=0
+D=A
+
+@LOOPW
+0;JMP
+
+(BLACK)
+@SCREEN
+M=-1
+D= A
+
+(LOOPB)
+D=D+1
+@16
+M=D
+
+@24575
 D=A-D
 @KEYBOARD
 D;JEQ
@@ -34,9 +66,8 @@ A=M
 M=-1
 D=A
 
-@LOOP
+@LOOPB
 0;JMP
-
 
 
 (END) 
