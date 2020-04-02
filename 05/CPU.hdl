@@ -39,5 +39,14 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
+
+    Mux16();
+    Register();
+    Register();
+    Mux16();
+    PC();
+    ALU();
+
+    
     // Put your code here:
 }
