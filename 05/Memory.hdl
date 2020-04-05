@@ -29,12 +29,13 @@ CHIP Memory {
     PARTS:
     // Put your code here:
 
-DMux(in=load,sel=address[0],a=loadr,b=loads);
+DMux(in=load,sel=address[14],a=loadr,b=loads);
 
-    RAM16K(in=in,load=loadr,address=address[1..14],out=ramout);
-    Screen(in=in,load=loads,address=address[1..14],out=screenout);
-    Keyboard(out=keyout);
+    RAM16K(in=in,load=loadr,address=address[0..13],out=ramout);
+    Screen(in=in,load=loads,address=address[0..12],out=screenout);
+    Keyboard(out=keybout);
 
-    Mux16(a=ramout,b=screenout,sel=address[0],out=mux1);
-    Mux16(a=mux1,b=keyout,sel=address[0],out=out);
+    Mux16(a=ramout,b=screenout,sel=address[14],out=mux1);
+    Mux16(a=mux1,b=keybout,sel=address[14],out=out);
+
 }
