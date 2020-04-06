@@ -40,13 +40,23 @@ CHIP CPU {
 
     PARTS:
 
-    Mux16();
-    Register();
-    Register();
-    Mux16();
-    PC();
-    ALU();
+       // Put your code here:
 
+Decode? (a=instruction, ____________);
+
+
+    Mux16(a=outM,b=instruction,sel=________,out=mux1out); //a and b might need to switch
+
+    ARegister(in=mux1out,load=________,out=A,out=addressM);
+
+    DRegister(in=outM,load=________,out=D);
+
+    Mux16(a=A,b=inM,sel=________,out=A/M); /a and b might need to switch
     
-    // Put your code here:
+    PC(in=A,load=________,inc=,reset=reset,out=pc);
+    
+    ALU(x=,y=,zx=,nx=,zy=,ny=,f=,np=,out=outM,zr=,ng=); // ________??
+
+    // ________ out=writeM
+ 
 }
