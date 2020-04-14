@@ -57,6 +57,6 @@ Decode? (a=instruction, ____________);
     
     ALU(x=,y=,zx=,nx=,zy=,ny=,f=,np=,out=outM,zr=,ng=); // ________??
 
-    // ________ out=writeM
+    // ________ out=writeM?
  
 }
