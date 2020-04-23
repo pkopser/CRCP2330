@@ -47,13 +47,13 @@ Decode? (a=instruction, ____________);
 
     Mux16(a=outM,b=instruction,sel=________,out=mux1out); //a and b might need to switch
 
-    ARegister(in=mux1out,load=________,out=A,out=addressM);
+    ARegister(in=mux1out,load=________,out=Aout,out=addressM);
 
-    DRegister(in=outM,load=________,out=D);
+    DRegister(in=outM,load=________,out=Dout);
 
-    Mux16(a=A,b=inM,sel=________,out=A/M); /a and b might need to switch
+    Mux16(a=Aout,b=inM,sel=________,out=A/M); /a and b might need to switch
     
-    PC(in=A,load=________,inc=,reset=reset,out=pc);
+    PC(in=Aout,load=________,inc=,reset=reset,out=PCout );
     
     ALU(x=,y=,zx=,nx=,zy=,ny=,f=,np=,out=outM,zr=,ng=); // ________??
 
