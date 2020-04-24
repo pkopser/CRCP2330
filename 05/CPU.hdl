@@ -45,18 +45,18 @@ CHIP CPU {
 Decode? (a=instruction, ____________);
 
 
-    Mux16(a=outM,b=instruction,sel=________,out=mux1out); //a and b might need to switch
+    Mux16(a=instruction,b=outM,sel=[1],out=mux1out); //hmm.. what would the sel be?
 
-    ARegister(in=mux1out,load=________,out=Aout,out=addressM);
+    ARegister(in=mux1out,load=mux1out[11],out=Aout,out=addressM);
 
-    DRegister(in=outM,load=________,out=Dout);
+    DRegister(in=outM,load=outM[12],out=Dout); // can i treat load like sel in this case?
 
-    Mux16(a=Aout,b=inM,sel=________,out=A/M); /a and b might need to switch
+    Mux16(a=Aout,b=inM,sel=[4],out=A/M); //hmm.. what would the sel be?
     
     PC(in=Aout,load=________,inc=,reset=reset,out=PCout );
     
     ALU(x=,y=,zx=,nx=,zy=,ny=,f=,np=,out=outM,zr=,ng=); // ________??
 
-    // ________ out=writeM?
+    // _____[13] out=writeM? // not sure how to strucure this. think somehting might come from ALU output control bits?
  
 }
