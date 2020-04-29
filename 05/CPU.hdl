@@ -42,21 +42,25 @@ CHIP CPU {
 
        // Put your code here:
 
-Decode? (a=instruction, ____________);
+    Mux16(a=instruction,b=ALUout,sel=instruction[0],out=mux1out); //if opcode = 0, pick instruction else pick ALU output
 
 
-    Mux16(a=instruction,b=outM,sel=[1],out=mux1out); //hmm.. what would the sel be?
 
-    ARegister(in=mux1out,load=mux1out[11],out=Aout,out=addressM);
+    ARegister(in=mux1out,load=instruction[10],out=Aout,out[1..14]=addressM); //if opcode it 0 then the register will work b/c the load bit will be 0
 
-    DRegister(in=outM,load=outM[12],out=Dout); // can i treat load like sel in this case?
+    DRegister(in=ALUout,load=instruction[11],out=Dout);//load is center dest bit
 
-    Mux16(a=Aout,b=inM,sel=[4],out=A/M); //hmm.. what would the sel be?
+    Mux16(a=inM,b=Aout,sel=Aout[3],out=mux2out); loads M instruction parts into ALU if 4th bit of Aout is 1.
     
-    PC(in=Aout,load=________,inc=,reset=reset,out=PCout );
-    
-    ALU(x=,y=,zx=,nx=,zy=,ny=,f=,np=,out=outM,zr=,ng=); // ________??
 
-    // _____[13] out=writeM? // not sure how to strucure this. think somehting might come from ALU output control bits?
+    Or(in=Mux1out[13],in=Mux1out[14],out=PCOr1)
+    Or(in=PCOr1,in=Mux1out[15],out=PCOr2)
+    Not(in=PCOr2,out=PCload) /// these 3 lines dictate whether or not jump is true, and makeing PC's load bit
+
+    PC(in=Aout,load=PCload,inc=_________,reset=reset,out=PCout ); // control bits needed for load and inc---> come from j?
+    
+    ALU(x=Dout,y=mux2out,zx=[4],nx=[5],zy=[6],ny=[7],f=[8],no=[9],out=outM,zr=,ng=,outM[12]=writeM); // ________??
+
+    // outM[12] out=writeM? // not sure how to strucure this. think somehting might come from ALU output control bits?
  
 }
