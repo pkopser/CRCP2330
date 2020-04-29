@@ -45,11 +45,11 @@ CHIP CPU {
 Mux16(a=instruction,b=ALUout,sel=instruction[10],out=mux1out); // feed ALU output into A register if d1 =1
 
 
-    ARegister(in=mux1out,load=instruction[10],out=Aout,out[1..14]=addressM); //if opcode it 0 then the register will work b/c the load bit will be 0
+    ARegister(in=mux1out,load=1,out=Aout,out[1..14]=addressM); //if opcode it 0 then the register will work b/c the load bit will be 0
 
 Mux16(a=false,b=ALUout,sel=instruction[11],out=Din);
 
-    DRegister(in=ALUout,load=instruction[11],out=Dout);//load is center dest bit
+    DRegister(in=ALUout,load=1,out=Dout);//load is center dest bit
 
     Mux16(a=Aout,b=inM,sel=Aout[3],out=mux2out); loads M instruction parts into ALU if 4th bit (a) of Aout =1
     
