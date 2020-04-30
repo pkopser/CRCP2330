@@ -42,22 +42,30 @@ CHIP CPU {
 
        // Put your code here:
 
+// maybe do some dmux where 
+in=(in=instruction,sel=instruction[0],a=ainstruction,b=cinstruction); 
+
 Mux16(a=instruction,b=ALUout,sel=instruction[10],out=mux1out); // feed ALU output into A register if d1 =1
 
 
-    ARegister(in=mux1out,load=1,out=Aout,out[1..14]=addressM); //if opcode it 0 then the register will work b/c the load bit will be 0
+    ARegister(in=mux1out,load=cinstruction[10],out=Aout,out[1..14]=addressM); //will only enter new value when d1 says to input ALU output into A register, else it will keep pushing through the instructions
 
-Mux16(a=false,b=ALUout,sel=instruction[11],out=Din);
+Mux16(a=false,b=ALUout,sel=cinstruction[11],out=Din);
 
-    DRegister(in=ALUout,load=1,out=Dout);//load is center dest bit
+    DRegister(in=Din,load=cinstruction[11],out=Dout);//load ALU output into D reg when d bit says to
 
-    Mux16(a=Aout,b=inM,sel=Aout[3],out=mux2out); loads M instruction parts into ALU if 4th bit (a) of Aout =1
+    Not(a=Aout[3],b=NotAout); //out is 1 if aout[3] is a 0
+
+And(a=NotAout,b=inM[3],out=Mux2selector); // out is 1 if BOTH aout[3] is a 0 and inM[3] is a 1--- thus creating a perfect selector bit
+
+
+    Mux16(a=Aout,b=inM,sel=Mux2selector,out=mux2out); // loads M instruction parts into ALU if 4th bit (a) of Aout =1 AND inM[3] =0, else loads Aout into ALU
     
 
 Or(in=zr1,in=ng1,out=resultALUtest); //out should be 1 if it passes ALU test to jump
 
-    Or(in=instruction[13],in=instruction[14],out=PCOr1)
-    Or(in=PCOr1,in=instruction[15],out=resultjtest)//out should be 1 if it passes the j's test to jump
+    Or(in=cinstruction[13],in=cinstruction[14],out=PCOr1)
+    Or(in=PCOr1,in=cinstruction[15],out=resultjtest)//out should be 1 if it passes the j's test to jump
     
 And(in=resultALUtest,in=resultjtest,out=loadtojump); // load bit will be 0 or one, based on if the PC needs to jump (thus accepting the Areg input)
 
@@ -67,6 +75,6 @@ And(in=resultALUtest,in=resultjtest,out=loadtojump); // load bit will be 0 or on
     ALU(x=Dout,y=mux2out,zx=[4],nx=[5],zy=[6],ny=[7],f=[8],no=[9],out=outM,zr=zr1,ng=ng1,outM[12]=shouldwriteM); 
 
 
-Mux16(a=false,b=inM,sel=instruction[12],out=writeM); //will write something if d3 is a 1 
+Mux16(a=false,b=inM,sel=cinstruction[12],out=writeM); //will write something if d3 is a 1 
  
 }
