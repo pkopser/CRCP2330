@@ -42,19 +42,23 @@ CHIP CPU {
 
        // Put your code here:
 
+
+// if dest says to not load in a but 1st bit is a 0, then load instruction (c) into a reg.
 // maybe do some dmux where 
-in=(in=instruction,sel=instruction[15],a=ainstruction,b=cinstruction); 
-
-Mux16(a=instruction,b=ALUout,sel=instruction[5],out=mux1out); // feed ALU output into A register if d1 =1
 
 
-    ARegister(in=mux1out,load=cinstruction[5],out=Aout,out[1..14]=addressM); //will only enter new value when d1 says to input ALU output into A register, else it will keep pushing through the instructions
 
-Mux16(a=false,b=ALUout,sel=cinstruction[4],out=Din);
+Mux16(a=instruction,b=ALUout,sel=instruction[5],out=mux1out1); // feed ALU output into A register if d1 =1
 
-    DRegister(in=Din,load=cinstruction[4],out=Dout);//load ALU output into D reg when d bit says to
+Mux16(a=instruction,b=mux1out1,sel=instruction[15],out=mux1out2);
 
-    Not(a=Aout[12],b=NotAout); //out is 1 if aout[3] is a 0
+    ARegister(in=mux1out2,load=instruction[5],out=Aout,out[0..14]=addressM,out[12]=Aout12); //will only enter new value when d1 says to input ALU output into A register, else it will keep pushing through the instructions
+
+Mux16(a=false,b=ALUout,sel=instruction[4],out=Din);
+
+    DRegister(in=Din,load=instruction[4],out=Dout);//load ALU output into D reg when d bit says to
+
+    Not(in=Aout12,out=NotAout); //out is 1 if aout[12] is a 0
 
 And(a=NotAout,b=inM[12],out=Mux2selector); // out is 1 if BOTH aout[12] is a 0 and inM[12] is a 1--- thus creating a perfect selector bit
 
@@ -62,19 +66,21 @@ And(a=NotAout,b=inM[12],out=Mux2selector); // out is 1 if BOTH aout[12] is a 0 a
     Mux16(a=Aout,b=inM,sel=Mux2selector,out=mux2out); // loads M instruction parts into ALU if 4th bit (a) of Aout =1 AND inM[3] =0, else loads Aout into ALU
     
 
-Or(in=zr1,in=ng1,out=resultALUtest); //out should be 1 if it passes ALU test to jump
+Or(a=zr1,b=ng1,out=resultALUtest); //out should be 1 if it passes ALU test to jump
 
-    Or(in=cinstruction[2],in=cinstruction[1],out=PCOr1)
-    Or(in=PCOr1,in=cinstruction[0],out=resultjtest)//out should be 1 if it passes the j's test to jump
+    Or(a=instruction[2],b=instruction[1],out=PCOr1);
+    Or(a=PCOr1,b=instruction[0],out=resultjtest);//out should be 1 if it passes the j's test to jump
     
-And(in=resultALUtest,in=resultjtest,out=loadtojump); // load bit will be 0 or one, based on if the PC needs to jump (thus accepting the Areg input)
+And(a=resultALUtest,b=resultjtest,out=loadtojump); // load bit will be 0 or one, based on if the PC needs to jump (thus accepting the Areg input)
 
 
-    PC(in=Aout,load=loadtojump,inc=1,reset=reset,out=PCout);
+
+Mux(a=true,b=false,sel=loadtojump,out=incpc);
+    PC(in=Aout,load=loadtojump,inc=incpc,reset=reset,out=PCout);
     
-    ALU(x=Dout,y=mux2out,zx=[11],nx=[10],zy=[9],ny=[8],f=[7],no=[6],out=outM,zr=zr1,ng=ng1,outM[12]=shouldwriteM); 
+    ALU(x=Dout,y=mux2out,zx=instruction[11],nx=instruction[10],zy=instruction[9],ny=instruction[8],f=instruction[7],no=instruction[6],out=outM,out=ALUout,zr=zr1,ng=ng1,out[12]=writeM); 
 
 
-Mux16(a=false,b=inM,sel=cinstruction[3],out=writeM); //will write something if d3 is a 1 
+//Mux16(a=false,b=inM,sel=instruction[3],out=writeM); //will write something if d3 is a 1 
  
 }
