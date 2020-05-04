@@ -75,8 +75,8 @@ And(a=resultALUtest,b=resultjtest,out=loadtojump); // load bit will be 0 or one,
 
 
 
-Mux(a=true,b=false,sel=loadtojump,out=incpc);
-    PC(in=Aout,load=loadtojump,inc=incpc,reset=reset,out=PCout);
+//Mux(a=true,b=false,sel=loadtojump,out=incpc);
+    PC(in=Aout,load=loadtojump,inc=true,reset=reset,out=PCout);
     
     ALU(x=Dout,y=mux2out,zx=instruction[11],nx=instruction[10],zy=instruction[9],ny=instruction[8],f=instruction[7],no=instruction[6],out=outM,out=ALUout,zr=zr1,ng=ng1,out[12]=writeM); 
 
