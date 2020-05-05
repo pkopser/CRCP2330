@@ -43,44 +43,71 @@ CHIP CPU {
        // Put your code here:
 
 
-// if dest says to not load in a but 1st bit is a 0, then load instruction (c) into a reg.
-// maybe do some dmux where 
+
+Mux16(a=instruction,b=ALUout,sel=instruction[15],out=mux1out); // feed instruction into A reg if 
+
+Not(in=instruction[15],out=oppositemsb);
+
+And(a=instruction[15],b=instruction[5],out=dmemory);
+And(a=true,b=oppositemsb,out=ainstruction);
+
+Or(a=ainstruction,b=dmemory,out=aloader);
+
+    ARegister(in=mux1out,load=aloader,out=Aout,out[0..14]=addressM,out[12]=Aout12); //will only enter new value when d1 says to input ALU output into A register, or when it's an a instruction
 
 
 
-Mux16(a=instruction,b=ALUout,sel=instruction[5],out=mux1out1); // feed ALU output into A register if d1 =1
-
-Mux16(a=instruction,b=mux1out1,sel=instruction[15],out=mux1out2);
-
-    ARegister(in=mux1out2,load=instruction[5],out=Aout,out[0..14]=addressM,out[12]=Aout12); //will only enter new value when d1 says to input ALU output into A register, else it will keep pushing through the instructions
-
-Mux16(a=false,b=ALUout,sel=instruction[4],out=Din);
-
-    DRegister(in=Din,load=instruction[4],out=Dout);//load ALU output into D reg when d bit says to
-
-    Not(in=Aout12,out=NotAout); //out is 1 if aout[12] is a 0
-
-And(a=NotAout,b=inM[12],out=Mux2selector); // out is 1 if BOTH aout[12] is a 0 and inM[12] is a 1--- thus creating a perfect selector bit
+// ==================================================================
 
 
-    Mux16(a=Aout,b=inM,sel=Mux2selector,out=mux2out); // loads M instruction parts into ALU if 4th bit (a) of Aout =1 AND inM[3] =0, else loads Aout into ALU
-    
+And(a=instruction[15],b=instruction[4],out=dload);
 
-Or(a=zr1,b=ng1,out=resultALUtest); //out should be 1 if it passes ALU test to jump
 
-    Or(a=instruction[2],b=instruction[1],out=PCOr1);
-    Or(a=PCOr1,b=instruction[0],out=resultjtest);//out should be 1 if it passes the j's test to jump
-    
-And(a=resultALUtest,b=resultjtest,out=loadtojump); // load bit will be 0 or one, based on if the PC needs to jump (thus accepting the Areg input)
+    DRegister(in=ALUout,load=dload,out=Dout);//load ALU output into D reg when d bit says to
+
+
+// ==================================================================
+
+
+And(a=instruction[15],b=instruction[12],out=loadinMin);
+
+Mux16(a=Aout,b=inM,sel=loadinMin,out=mux2out);
+
+
+// ==================================================================
 
 
 
-//Mux(a=true,b=false,sel=loadtojump,out=incpc);
-    PC(in=Aout,load=loadtojump,inc=true,reset=reset,out=PCout);
-    
-    ALU(x=Dout,y=mux2out,zx=instruction[11],nx=instruction[10],zy=instruction[9],ny=instruction[8],f=instruction[7],no=instruction[6],out=outM,out=ALUout,zr=zr1,ng=ng1,out[12]=writeM); 
+    ALU(x=Dout,y=mux2out,zx=instruction[11],nx=instruction[10],zy=instruction[9],ny=instruction[8],f=instruction[7],no=instruction[6],out=outM,out=ALUout,zr=zr1,ng=ng1);
+
+And(a=instruction[3],b=instruction[15],out=writeM);
+
+// ================================================================== 
+
+And(a=instruction[15],b=shouldjump,out=pcjump); // if its a C instruction and has a conditional or unconditional jump
+
+Or(a=unconditional,b=conditional,out=shouldjump); //jump when it is conditional and true or unconditional
+
+ And(a=instruction[2],b=instruction[1],out=Pcand1);
+    And(a=Pcand1,b=instruction[0],out=unconditional); //if j1-j3 are all 1 then jump is unconditional
 
 
-//Mux16(a=false,b=inM,sel=instruction[3],out=writeM); //will write something if d3 is a 1 
+
+And(a=instruction[2],b=ng1,out=jlt);
+And(a=instruction[1],b=zr1,out=jeq);
+And(a=instruction[0],b=greaterthan,out=jgt); 
+
+Or(a=jlt,b=jeq,out=firsttwo);
+Or(a=firsttwo,b=jgt,out=conditional); //if one of these three is true then jump is conditional and passes
+
+Not(in=pcjump,out=pcinc); //when it jumps, it will not increment by one
+
+
+    PC(in=Aout,load=pcjump,inc=pcinc,reset=reset,out=PCout,out[0..14]=pc); 
+   
+
+Or(a=zr1,b=ng1,out=equalorlessthan);
+Not(in=equalorlessthan,out=greaterthan); //testing ALU's output to compare with JGT 
+
  
 }
