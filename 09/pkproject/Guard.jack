@@ -1,0 +1,67 @@
+// Initialize class 
+
+
+
+class Guard{
+	
+	field int cx,cy; //center of circle x and y
+	field int speed; //speed of person
+	field int white;
+	field int black;
+
+	let speed=5;
+	let white=true;
+	let black= false;
+
+// creates a person with speed
+//do i need to add colors "let" here?
+constructor Guard new(int ccx,in ccy,int spd){ 
+	let cx= ccx;
+	let cy= ccy;
+	let speed= spd;
+	do draw();
+
+	return this;
+
+}
+method void dispose(){
+	
+	do Memory.deAlloc(this);
+	return;
+}
+
+//Draw guard on screen
+
+method void draw(){
+	do Screen.setColor(black);
+	do Screen.drawCircle((cx+speed),cy,7);
+	return;
+}
+
+method void erase(){
+	do Screen.setColor(white);
+	do Screen.drawCircle((cx+speed),cy,7);
+	return;
+}
+
+method void invertColors(){
+	
+let white=black;
+let black=white;
+
+return;
+}
+
+methoid void moveGuards(){
+
+if (((cx+speed)>7) & ((cx+speed)<504)){
+	do Screen.setColor(white);
+	do Screen.drawCircle((cx+speed)-1,cy,7);
+	let cx=cx+speed;
+	do Screen.setColor(black);
+	do Screen.drawCircle((cx+speed),cy,7); //maybe an error here??
+}
+return;
+}
+	
+}

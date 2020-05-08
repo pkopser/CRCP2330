@@ -1,0 +1,51 @@
+
+
+class Prison{
+	
+	field Guard andy;
+	field Guard betty;
+	field Guard carl;
+
+	constructor Prison new(){
+
+	let andy=Guard.new(30,52,7);
+	let betty=Guard.new(350,123,7);
+	let carl=Guard.new(200,182,7);
+
+return this;
+	}
+
+method void dispose(){
+	
+	do guard.dispose();
+	do Memory.deAlloc(this);
+	return;
+}
+
+
+method void run(){
+
+var char key;
+var boolean exit;
+let exit=false;
+
+while(~exit){
+while(key=0){
+	let key=Keyboard.keyPressed();
+do Guard.moveGuards();
+}
+
+
+
+if (key=73) {do guard.invertColors();} //invert colors when i key is pressed
+
+while(~(key=0)){
+	let key= Keyboard.keyPressed();
+	do Guard.moveGuards();
+}
+}
+return;
+}
+
+}
+
