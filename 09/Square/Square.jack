@@ -42,7 +42,7 @@ class Square {
    method void incSize() {
       if (((y + size) < 254) & ((x + size) < 510)) {
          do erase();
-         let size = size + 2;
+         let size = size + 10;
          do draw();
       }
       return;
@@ -52,7 +52,7 @@ class Square {
    method void decSize() {
       if (size > 2) {
          do erase();
-         let size = size - 2;
+         let size = size - 10;
          do draw();
       }
       return;

@@ -79,7 +79,7 @@ push pointer 0
 call Square.erase 1
 pop temp 0
 push this 2
-push constant 2
+push constant 10
 add
 pop this 2
 push pointer 0
@@ -101,7 +101,7 @@ push pointer 0
 call Square.erase 1
 pop temp 0
 push this 2
-push constant 2
+push constant 10
 sub
 pop this 2
 push pointer 0
