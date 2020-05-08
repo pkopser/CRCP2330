@@ -1,0 +1,10 @@
+class Shape{
+	
+	field Circle circle;
+
+	constructor Shape new(){
+
+	let circle=Circle.new(50,50);
+	return this;
+	}
+}

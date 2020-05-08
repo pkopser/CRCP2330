@@ -1,0 +1,23 @@
+class Circle{
+	
+	field int cx,cy; //center of circle x and y
+	
+constructor Circle new(int ccx,int ccy){ 
+	let cx= ccx;
+	let cy= ccy;
+	do draw();
+
+	return this;
+
+}
+method void dispose(){
+	
+	do Memory.deAlloc(this);
+	return;
+}
+
+//Draw guard on screen
+
+
+
+}

@@ -1,0 +1,11 @@
+class Shape{
+	
+	field Circle circle;
+
+	constructor Shape new(){
+
+	let circle=Circle.new(17circle)
+	}
+	l
+	}
+}

@@ -1,0 +1,12 @@
+class Main{
+	
+function void main(){
+	var Circle circle;
+	let circle= Circle.new();
+	
+
+	return;
+
+}
+
+}

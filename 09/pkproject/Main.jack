@@ -5,13 +5,14 @@
 class Main{
 	
 function void main(){
-	var Prison game;
-	let game= Prison.new();
-	do game.run();
-	do game.dispose();
+	
+var Town austin;
+let austin=Town.new();
 
-	return;
+do austin.dispose();
 
+return;
 }
 
 }
+
