@@ -7,9 +7,12 @@ class Prison{
 
 	constructor Prison new(){
 
-	let amy= Guard.new(50,50);
-	let bob= Guard.new(80,80);
-	let carl= Guard.new(100,100);
+	let amy= Guard.new(80,50);
+	let bob= Guard.new(400,115);
+	let carl= Guard.new(230,185);
+
+ 
+
 	return this;
 	}
 
@@ -23,4 +26,5 @@ class Prison{
 	}
 
 }
+
 

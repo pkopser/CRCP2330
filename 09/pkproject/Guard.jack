@@ -1,14 +1,18 @@
 
 class Guard{
 	field int cx,cy;
+	
+
 
 	constructor Guard new(int ccx,int ccy){
 
 	let cx=ccx;
 	let cy=ccy;
 
-	do draw();
 
+	do draw();
+	do setBackground();
+	
 	return this;
 	}
 
@@ -19,14 +23,34 @@ class Guard{
 
 	method void draw(){
 	do Screen.setColor(true);
-	do Screen.drawCircle(cx,cy,7);
+	do Screen.drawCircle(cx,cy,15);
 	return;
 	}
 
-	method void erase(){
-	do Screen.setColor(false);
-	do Screen.drawCircle(cx,cy,7);
+
+		method void setBackground(){
+
+	   do Screen.setColor(true);
+	do Screen.drawRectangle(0,65,511,72);
+	do Screen.drawRectangle(0,130,511,137);
+	do Screen.drawRectangle(0,200,511,207);
+
+	do Screen.drawRectangle(0,0,2,255);
+	do Screen.drawRectangle(50,0,52,255);
+	do Screen.drawRectangle(100,0,102,255);
+	do Screen.drawRectangle(150,0,152,255);
+	do Screen.drawRectangle(200,0,202,255);
+	do Screen.drawRectangle(250,0,252,255);
+	do Screen.drawRectangle(300,0,302,255);
+	do Screen.drawRectangle(350,0,352,255);
+	do Screen.drawRectangle(400,0,402,255);
+	do Screen.drawRectangle(450,0,452,255);
+	do Screen.drawRectangle(500,0,502,255);
+
+
 	return;
 	}
+
+	
 
 }
