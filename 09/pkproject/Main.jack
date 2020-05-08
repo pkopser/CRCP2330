@@ -6,10 +6,10 @@ class Main{
 	
 function void main(){
 	
-var Town austin;
-let austin=Town.new();
+var Prison alcatraz;
+let alcatraz=Prison.new();
 
-do austin.dispose();
+do alcatraz.dispose();
 
 return;
 }

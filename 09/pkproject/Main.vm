@@ -1,8 +1,8 @@
 function Main.main 1
-call Town.new 0
+call Prison.new 0
 pop local 0
 push local 0
-call Town.dispose 1
+call Prison.dispose 1
 pop temp 0
 push constant 0
 return
